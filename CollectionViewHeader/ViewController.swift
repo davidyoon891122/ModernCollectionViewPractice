@@ -20,17 +20,9 @@ class ViewController: UIViewController {
     private lazy var mainCollectionView: UICollectionView = {
         let layout = createLayout()
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        collectionView.register(
-            FirstHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: FirstHeader.identifier
-        )
-        
-        collectionView.register(
-            FirstCell.self,
-            forCellWithReuseIdentifier: FirstCell.identifier
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
         )
         
         return collectionView
@@ -109,22 +101,22 @@ private extension ViewController {
     }
     
     func configureDataSource() {
+        let registration = UICollectionView.CellRegistration<FirstCell, PersonData> {cell,indexPath,itemIdentifier in
+            cell.setupCell(name: itemIdentifier.name, number: itemIdentifier.number)
+        }
+        
+        let headerRegistration = UICollectionView.SupplementaryRegistration<FirstHeader>(elementKind: UICollectionView.elementKindSectionHeader) { supplementaryView, elementKind, indexPath in
+            supplementaryView.setupCell()
+        }
+        
         dataSource = UICollectionViewDiffableDataSource<Int, PersonData>(
             collectionView: mainCollectionView,
             cellProvider: { collectionView,indexPath,itemIdentifier in
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FirstCell.identifier, for: indexPath) as? FirstCell else { return UICollectionViewCell() }
-                
-                cell.setupCell(name: itemIdentifier.name, number: itemIdentifier.number)
-                
-                return cell
+                return collectionView.dequeueConfiguredReusableCell(using: registration, for: indexPath, item: itemIdentifier)
         })
         
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FirstHeader.identifier, for: indexPath) as? FirstHeader else { return UICollectionReusableView() }
-            
-            headerView.setupCell()
-            
-            return headerView
+            return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
         }
         
         applySnapshot()
