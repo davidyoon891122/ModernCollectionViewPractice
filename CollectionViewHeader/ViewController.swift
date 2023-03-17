@@ -22,9 +22,16 @@ class ViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        collectionView.dataSource = self
+        collectionView.register(
+            FirstHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: FirstHeader.identifier
+        )
         
-        collectionView.register(FirstCell.self, forCellWithReuseIdentifier: FirstCell.identifier)
+        collectionView.register(
+            FirstCell.self,
+            forCellWithReuseIdentifier: FirstCell.identifier
+        )
         
         return collectionView
     }()
@@ -39,26 +46,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        configureDataSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 }
 
 private var people: [PersonData] = PersonData.allPersonData
 
 private var dataSource: UICollectionViewDiffableDataSource<Int,PersonData>! = nil
-
-extension ViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return people.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FirstCell.identifier, for: indexPath) as? FirstCell else { return UICollectionViewCell() }
-        let person = people[indexPath.item]
-        cell.setupCell(name: person.name, number: person.number)
-        
-        return cell
-    }
-}
 
 private extension ViewController {
     func setupViews() {
@@ -103,6 +101,27 @@ private extension ViewController {
         })
         
         return layout
+    }
+    
+    func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<Int, PersonData>(
+            collectionView: mainCollectionView,
+            cellProvider: { collectionView,indexPath,itemIdentifier in
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FirstCell.identifier, for: indexPath) as? FirstCell else { return UICollectionViewCell() }
+                
+                cell.setupCell(name: itemIdentifier.name, number: itemIdentifier.number)
+                
+                return cell
+        })
+        
+        applySnapshot()
+    }
+    
+    func applySnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, PersonData>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(people)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
