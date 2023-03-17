@@ -29,6 +29,13 @@ class ViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -57,7 +64,8 @@ private extension ViewController {
     func setupViews() {
         [
             topView,
-            mainCollectionView
+            mainCollectionView,
+            bottomView,
         ]
             .forEach {
                 view.addSubview($0)
@@ -73,7 +81,14 @@ private extension ViewController {
         mainCollectionView.snp.makeConstraints {
             $0.top.equalTo(topView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
+        }
+        
+        bottomView.snp.makeConstraints {
+            $0.top.equalTo(mainCollectionView.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
+            $0.height.equalTo(200.0)
         }
     }
     

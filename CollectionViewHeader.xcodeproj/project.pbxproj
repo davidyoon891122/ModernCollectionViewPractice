@@ -15,6 +15,7 @@
 		49291DC629C175B400DC6011 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 49291DC529C175B400DC6011 /* SnapKit-Dynamic */; };
 		494D0DE329C280AF00F56D78 /* FirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D0DE229C280AF00F56D78 /* FirstCell.swift */; };
 		494D0DE529C288D200F56D78 /* PersonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D0DE429C288D200F56D78 /* PersonData.swift */; };
+		497B81A129C3D7D6002AAF25 /* FirstHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497B81A029C3D7D6002AAF25 /* FirstHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		49291DBE29C1751E00DC6011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		494D0DE229C280AF00F56D78 /* FirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCell.swift; sourceTree = "<group>"; };
 		494D0DE429C288D200F56D78 /* PersonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonData.swift; sourceTree = "<group>"; };
+		497B81A029C3D7D6002AAF25 /* FirstHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				49291DBE29C1751E00DC6011 /* Info.plist */,
 				494D0DE229C280AF00F56D78 /* FirstCell.swift */,
 				494D0DE429C288D200F56D78 /* PersonData.swift */,
+				497B81A029C3D7D6002AAF25 /* FirstHeader.swift */,
 			);
 			path = CollectionViewHeader;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49291DB529C1751C00DC6011 /* ViewController.swift in Sources */,
+				497B81A129C3D7D6002AAF25 /* FirstHeader.swift in Sources */,
 				49291DB129C1751C00DC6011 /* AppDelegate.swift in Sources */,
 				494D0DE329C280AF00F56D78 /* FirstCell.swift in Sources */,
 				494D0DE529C288D200F56D78 /* PersonData.swift in Sources */,
