@@ -96,7 +96,12 @@ private extension ViewController {
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
             let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50.0)), subitems: [item])
+            
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(50.0)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
             let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [sectionHeader
+            
+            ]
             return section
         })
         
@@ -113,6 +118,14 @@ private extension ViewController {
                 
                 return cell
         })
+        
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FirstHeader.identifier, for: indexPath) as? FirstHeader else { return UICollectionReusableView() }
+            
+            headerView.setupCell()
+            
+            return headerView
+        }
         
         applySnapshot()
     }

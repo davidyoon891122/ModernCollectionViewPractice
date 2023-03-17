@@ -15,6 +15,7 @@ final class FirstHeader: UICollectionReusableView {
         label.font = .preferredFont(forTextStyle: .title1)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .label
+        label.text = "PhoneBook"
         
         return label
     }()
